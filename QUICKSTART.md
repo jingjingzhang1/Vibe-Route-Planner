@@ -1,70 +1,70 @@
-# 快速开始指南
+# Quick Start Guide
 
-## 3 步开始使用
+## 3 Steps to Get Started
 
-### 第 1 步：启动服务器
+### Step 1: Start the Server
 ```bash
 ./start.sh
 ```
 
-等待 5 秒，看到 "✅ 服务器已启动" 即可。
+Wait 5 seconds, when you see "✅ Server started", you're ready.
 
-### 第 2 步：登录
+### Step 2: Login
 ```bash
 ./login.sh
 ```
 
-- 如果显示 "✅ 已登录" → 跳到第 3 步
-- 如果显示 "❌ 未登录" → 会生成二维码，用小红书 APP 扫码
+- If it shows "✅ Logged in" → Skip to Step 3
+- If it shows "❌ Not logged in" → A QR code will be generated, scan it with the Xiaohongshu app
 
-### 第 3 步：搜索
+### Step 3: Search
 ```bash
 python3 xiaohongshu_api.py "Tokyo Coffee" 10
 ```
 
-结果会保存到 `tokyo_coffee_notes.txt`
+Results will be saved to `tokyo_coffee_notes.txt`
 
 ---
 
-## 常见用法
+## Common Use Cases
 
-### 搜索旅游信息
+### Search Travel Information
 ```bash
-python3 xiaohongshu_api.py "东京旅游攻略" 15
-python3 xiaohongshu_api.py "京都赏樱" 10
+python3 xiaohongshu_api.py "Tokyo Travel Guide" 15
+python3 xiaohongshu_api.py "Kyoto Cherry Blossoms" 10
 ```
 
-### 搜索美食
+### Search Food
 ```bash
-python3 xiaohongshu_api.py "上海米其林" 10
-python3 xiaohongshu_api.py "成都火锅" 15
+python3 xiaohongshu_api.py "Shanghai Michelin" 10
+python3 xiaohongshu_api.py "Chengdu Hot Pot" 15
 ```
 
-### 搜索购物
+### Search Shopping
 ```bash
-python3 xiaohongshu_api.py "日本药妆推荐" 10
+python3 xiaohongshu_api.py "Japan Drugstore Recommendations" 10
 ```
 
 ---
 
-## 下次使用
+## Next Time You Use
 
-每次重新打开 VSCode：
+Each time you reopen VSCode:
 
 ```bash
-# 1. 启动服务器（如果 Docker 关闭了）
+# 1. Start the server (if Docker was closed)
 ./start.sh
 
-# 2. 检查登录（通常不需要）
+# 2. Check login (usually not needed)
 ./login.sh
 
-# 3. 开始搜索
-python3 xiaohongshu_api.py "关键词" 10
+# 3. Start searching
+python3 xiaohongshu_api.py "keyword" 10
 ```
 
 ---
 
-## 停止服务器
+## Stop the Server
 
 ```bash
 ./stop.sh
@@ -72,6 +72,6 @@ python3 xiaohongshu_api.py "关键词" 10
 
 ---
 
-## 遇到问题？
+## Having Issues?
 
-查看完整文档: [README.md](README.md)
+Check the complete documentation: [README.md](README.md)

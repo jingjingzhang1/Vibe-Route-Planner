@@ -1,120 +1,120 @@
-# 项目整理完成总结
+# Project Organization Summary
 
-## ✅ 已完成
+## ✅ Completed
 
-### 1. 清理文件
-- ✅ 删除所有临时测试文件
-- ✅ 删除重复的脚本
-- ✅ 只保留核心代码和示例输出
+### 1. File Cleanup
+- ✅ Deleted all temporary test files
+- ✅ Removed duplicate scripts
+- ✅ Kept only core code and sample outputs
 
-### 2. 创建通用 API
-- ✅ `xiaohongshu_api.py` - 支持任意关键词搜索
-- ✅ 只提取标题和正文（无作者、无点赞数）
-- ✅ 自动保存结果到文件
+### 2. Created Universal API
+- ✅ `xiaohongshu_api.py` - Supports searching for any keyword
+- ✅ Extracts only title and body text (no author info, no like counts)
+- ✅ Auto-saves results to file
 
-### 3. 简化流程
-- ✅ `start.sh` - 一键启动服务器
-- ✅ `login.sh` - 登录检查和二维码生成
-- ✅ `stop.sh` - 停止服务器
+### 3. Simplified Workflow
+- ✅ `start.sh` - One-click server startup
+- ✅ `login.sh` - Login check and QR code generation
+- ✅ `stop.sh` - Stop server
 
-### 4. 文档完善
-- ✅ `README.md` - 完整使用文档
-- ✅ `QUICKSTART.md` - 快速开始指南
-- ✅ `PROJECT_STRUCTURE.md` - 项目结构说明
+### 4. Complete Documentation
+- ✅ `README.md` - Complete usage documentation
+- ✅ `QUICKSTART.md` - Quick start guide
+- ✅ `PROJECT_STRUCTURE.md` - Project structure description
 
-## 📁 最终文件结构
+## 📁 Final File Structure
 
 ```
-核心文件 (7个):
-├── xiaohongshu_api.py        # 主要 API
-├── start.sh                   # 启动服务器
-├── login.sh                   # 登录
-├── stop.sh                    # 停止
-├── README.md                  # 完整文档
-├── QUICKSTART.md              # 快速开始
-└── PROJECT_STRUCTURE.md       # 项目结构
+Core Files (7):
+├── xiaohongshu_api.py        # Main API
+├── start.sh                   # Start server
+├── login.sh                   # Login
+├── stop.sh                    # Stop
+├── README.md                  # Complete documentation
+├── QUICKSTART.md              # Quick start
+└── PROJECT_STRUCTURE.md       # Project structure
 
-配置文件:
-├── cookies.json              # 登录凭证
-└── docker/docker-compose.yml # Docker 配置
+Configuration Files:
+├── cookies.json              # Login credentials
+└── docker/docker-compose.yml # Docker configuration
 
-示例输出:
-├── tokyo_coffee_clean.txt    # Tokyo Coffee 搜索结果
-└── 东京咖啡_notes.txt         # 测试输出
+Sample Output:
+├── tokyo_coffee_clean.txt    # Tokyo Coffee search results
+└── tokyo_travel_notes.txt    # Test output
 ```
 
-## 🚀 每次使用流程
+## 🚀 Usage Workflow
 
-### 首次使用
+### First-Time Setup
 ```bash
-./start.sh              # 启动服务器
-./login.sh              # 登录（扫码）
+./start.sh              # Start server
+./login.sh              # Login (scan QR code)
 python3 xiaohongshu_api.py "Tokyo Coffee" 10
 ```
 
-### 之后每次打开 VSCode
+### Each Time You Open VSCode
 ```bash
-./start.sh              # 启动服务器（如需要）
-./login.sh              # 检查登录（如需要）
-python3 xiaohongshu_api.py "搜索关键词" 数量
+./start.sh              # Start server (if needed)
+./login.sh              # Check login (if needed)
+python3 xiaohongshu_api.py "search keyword" quantity
 ```
 
-## 🎯 使用示例
+## 🎯 Usage Examples
 
-### 搜索旅游信息
+### Search Travel Information
 ```bash
-python3 xiaohongshu_api.py "东京旅游" 15
-python3 xiaohongshu_api.py "京都赏樱" 10
-python3 xiaohongshu_api.py "大阪美食" 10
+python3 xiaohongshu_api.py "Tokyo Travel" 15
+python3 xiaohongshu_api.py "Kyoto Cherry Blossoms" 10
+python3 xiaohongshu_api.py "Osaka Food" 10
 ```
 
-### 搜索咖啡店
+### Search Coffee Shops
 ```bash
 python3 xiaohongshu_api.py "Tokyo Coffee" 10
-python3 xiaohongshu_api.py "上海咖啡" 15
+python3 xiaohongshu_api.py "Shanghai Coffee" 15
 ```
 
-### 搜索购物
+### Search Shopping
 ```bash
-python3 xiaohongshu_api.py "日本药妆" 10
-python3 xiaohongshu_api.py "韩国化妆品" 10
+python3 xiaohongshu_api.py "Japan Drugstore" 10
+python3 xiaohongshu_api.py "Korean Cosmetics" 10
 ```
 
-## 💻 在 Python 代码中使用
+## 💻 Using in Python Code
 
 ```python
 from xiaohongshu_api import XiaohongshuAPI
 
 api = XiaohongshuAPI()
 
-# 检查登录
+# Check login
 if not api.check_login():
-    print("请先登录")
+    print("Please login first")
     exit()
 
-# 搜索并提取
+# Search and extract
 results = api.search_and_extract("Tokyo Coffee", max_notes=10)
 
-# 处理结果
+# Process results
 for note in results:
-    print(f"标题: {note['title']}")
-    print(f"内容: {note['content'][:100]}...")
+    print(f"Title: {note['title']}")
+    print(f"Content: {note['content'][:100]}...")
 ```
 
-## 📊 输出格式
+## 📊 Output Format
 
-每条笔记包含：
-- **标题** - 笔记标题
-- **内容** - 完整正文（包括地址、推荐、详细描述等）
+Each note contains:
+- **Title** - Note title
+- **Content** - Full body text (includes address, recommendations, detailed descriptions, etc.)
 
-无作者信息、无点赞数、无评论数。
+No author info, no like counts, no comment counts.
 
-## 🔗 文档链接
+## 🔗 Documentation Links
 
-- 完整文档: [README.md](README.md)
-- 快速开始: [QUICKSTART.md](QUICKSTART.md)
-- 项目结构: [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+- Complete documentation: [README.md](README.md)
+- Quick start: [QUICKSTART.md](QUICKSTART.md)
+- Project structure: [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
 
 ---
 
-**现在项目已经完全整理好，可以直接使用了！** 🎉
+**The project is now fully organized and ready to use!** 🎉

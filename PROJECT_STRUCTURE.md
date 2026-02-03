@@ -1,52 +1,52 @@
-# 项目结构
+# Project Structure
 
 ```
 rednote-mcp/
-├── README.md                      # 完整文档
-├── QUICKSTART.md                  # 快速开始指南
-├── xiaohongshu_api.py            # 核心 API（主要代码）
-├── start.sh                       # 启动 MCP 服务器
-├── login.sh                       # 登录检查和二维码生成
-├── stop.sh                        # 停止服务器
-├── cookies.json                   # 登录凭证（自动生成）
+├── README.md                      # Complete documentation
+├── QUICKSTART.md                  # Quick start guide
+├── xiaohongshu_api.py            # Core API (main code)
+├── start.sh                       # Start MCP server
+├── login.sh                       # Login check and QR code generation
+├── stop.sh                        # Stop server
+├── cookies.json                   # Login credentials (auto-generated)
 ├── docker/
-│   ├── docker-compose.yml        # Docker 配置
-│   └── start-server.sh           # Docker 启动脚本
-├── tokyo_coffee_clean.txt        # 示例输出（Tokyo Coffee）
-└── 东京咖啡_notes.txt             # 测试输出
+│   ├── docker-compose.yml        # Docker configuration
+│   └── start-server.sh           # Docker startup script
+├── tokyo_coffee_clean.txt        # Sample output (Tokyo Coffee)
+└── tokyo_travel_notes.txt        # Test output
 ```
 
-## 核心文件说明
+## Core File Descriptions
 
 ### xiaohongshu_api.py
-主要的 Python API，包含：
-- `XiaohongshuAPI` 类
-- `check_login()` - 检查登录
-- `search()` - 搜索笔记列表
-- `get_note_content()` - 获取单条笔记
-- `search_and_extract()` - 搜索并提取完整内容
+The main Python API containing:
+- `XiaohongshuAPI` class
+- `check_login()` - Check login status
+- `search()` - Search for note list
+- `get_note_content()` - Get single note content
+- `search_and_extract()` - Search and extract full content
 
 ### start.sh
-一键启动 Docker 容器，运行 MCP 服务器
+One-click Docker container startup to run MCP server
 
 ### login.sh
-检查登录状态，如果未登录则生成二维码
+Check login status, generates QR code if not logged in
 
 ### stop.sh
-停止 Docker 容器
+Stop Docker container
 
-## 输出文件
+## Output Files
 
-每次搜索会生成一个文件，文件名格式：
-- `{关键词}_notes.txt`
+Each search generates a file with the format:
+- `{keyword}_notes.txt`
 
-例如：
+Examples:
 - `tokyo_coffee_notes.txt`
-- `东京旅游_notes.txt`
+- `tokyo_travel_notes.txt`
 
-## 不需要的文件
+## Unnecessary Files
 
-以下文件可以删除（已在 .gitignore 中）：
-- `*_notes.txt` - 输出文件
-- `qrcode.png` - 临时二维码
-- `tokyo_coffee_results.json` - 原始搜索结果
+The following files can be deleted (already in .gitignore):
+- `*_notes.txt` - Output files
+- `qrcode.png` - Temporary QR code
+- `tokyo_coffee_results.json` - Raw search results

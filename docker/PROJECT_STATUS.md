@@ -1,95 +1,95 @@
-# 小红书 MCP 服务器 - 项目状态
+# Xiaohongshu MCP Server - Project Status
 
-## ✅ 当前状态
+## ✅ Current Status
 
-**服务器已成功运行！**
+**Server is running successfully!**
 
-- **容器名称**: xiaohongshu-mcp-server
-- **端口**: 18060
-- **访问地址**: http://localhost:18060
-- **状态**: 运行中 (Up 14 minutes)
+- **Container name**: xiaohongshu-mcp-server
+- **Port**: 18060
+- **Access URL**: http://localhost:18060
+- **Status**: Running (Up 14 minutes)
 
-## 📦 项目结构
+## 📦 Project Structure
 
 ```
 rednote-mcp/
 ├── docker/
-│   ├── docker-compose.yml      # Docker Compose 配置
-│   ├── start-server.sh         # 启动脚本
-│   └── test-server.sh          # 测试脚本
-├── cookies.json                # 小红书登录 cookies
-├── xiaohongshu-login-darwin-arm64   # 登录工具（macOS ARM64）
-├── xiaohongshu-mcp-darwin-arm64     # MCP 服务器（macOS ARM64）
-└── test_mcp.py                 # Python 测试脚本
+│   ├── docker-compose.yml      # Docker Compose configuration
+│   ├── start-server.sh         # Startup script
+│   └── test-server.sh          # Test script
+├── cookies.json                # Xiaohongshu login cookies
+├── xiaohongshu-login-darwin-arm64   # Login tool (macOS ARM64)
+├── xiaohongshu-mcp-darwin-arm64     # MCP server (macOS ARM64)
+└── test_mcp.py                 # Python test script
 ```
 
-## 🚀 如何使用
+## 🚀 How to Use
 
-### 启动服务器
+### Start Server
 ```bash
 cd docker
 ./start-server.sh
 ```
 
-### 停止服务器
+### Stop Server
 ```bash
 cd docker
 docker compose down
 ```
 
-### 查看日志
+### View Logs
 ```bash
 docker logs -f xiaohongshu-mcp-server
 ```
 
-### 测试服务器
+### Test Server
 ```bash
 ./test-server.sh
-# 或
+# or
 python3 test_mcp.py
 ```
 
-## 🔧 MCP 服务器功能
+## 🔧 MCP Server Features
 
-这个 MCP 服务器提供了 **12 个工具**，用于：
-- 🔍 搜索小红书笔记
-- 👤 获取用户信息
-- ✈️ 抓取旅行相关内容
-- 📊 其他小红书数据接口
+This MCP server provides **12 tools** for:
+- 🔍 Searching Xiaohongshu notes
+- 👤 Getting user information
+- ✈️ Scraping travel-related content
+- 📊 Other Xiaohongshu data interfaces
 
-## 🎯 下一步计划（基于你的旅行规划项目）
+## 🎯 Next Steps (Based on Your Travel Planning Project)
 
-### Phase 1: 数据抓取
-- [x] 设置小红书 MCP 服务器
-- [ ] 实现基于关键词的笔记搜索
-- [ ] 提取高浏览量博客的景点信息
-- [ ] 二次验证景点信息（营业状态、最佳访问时间）
+### Phase 1: Data Scraping
+- [x] Set up Xiaohongshu MCP server
+- [ ] Implement keyword-based note search
+- [ ] Extract scenic spot information from high-view blogs
+- [ ] Secondary verification of scenic spot info (operating status, best visit times)
 
-### Phase 2: 用户输入
-- [ ] 设计用户偏好问卷
-  - 旅行风格（休闲、打卡、摄影、运动等）
-  - 时间范围
-  - 目的地选项
-  - 过敏信息等
+### Phase 2: User Input
+- [ ] Design user preference questionnaire
+  - Travel style (leisure, sightseeing, photography, sports, etc.)
+  - Time range
+  - Destination options
+  - Allergy information, etc.
 
-### Phase 3: 路线规划
-- [ ] 集成 Google Maps API（全球）
-- [ ] 集成 Baidu Maps API（中国）
-- [ ] 实现路线优化算法
+### Phase 3: Route Planning
+- [ ] Integrate Google Maps API (global)
+- [ ] Integrate Baidu Maps API (China)
+- [ ] Implement route optimization algorithm
 
-### Phase 4: 输出生成
-- [ ] 生成旅行计划文本
-- [ ] 生成路线地图（JPG）
-- [ ] 添加提醒事项和预订链接
-- [ ] 支持 PDF 导出
+### Phase 4: Output Generation
+- [ ] Generate travel plan text
+- [ ] Generate route map (JPG)
+- [ ] Add reminders and booking links
+- [ ] Support PDF export
 
-## 📝 注意事项
+## 📝 Notes
 
-1. **Cookies**: [cookies.json](cookies.json:1) 包含小红书的登录凭证，用于访问小红书 API
-2. **Docker**: 使用 Docker 运行，支持跨平台
-3. **端口**: 确保 18060 端口未被占用
+1. **Cookies**: [cookies.json](cookies.json:1) contains Xiaohongshu login credentials for API access
+2. **Docker**: Uses Docker for cross-platform support
+3. **Port**: Ensure port 18060 is not occupied
 
-## 🔗 参考资料
+## 🔗 References
 
-- GitHub 仓库: https://github.com/xpzouying/xiaohongshu-mcp
-- MCP 协议: Model Context Protocol (2024-11-05)
+- GitHub repository: https://github.com/xpzouying/xiaohongshu-mcp
+- MCP protocol: Model Context Protocol (2024-11-05)

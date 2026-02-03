@@ -1,249 +1,249 @@
-# 小红书内容抓取 API
+# Xiaohongshu (RedNote) Content Scraping API
 
-通用的小红书笔记抓取工具，可以搜索任意关键词并提取笔记的标题和正文内容。
+A universal Xiaohongshu note scraping tool that can search for any keyword and extract note titles and body content.
 
-## 📋 目录
+## 📋 Table of Contents
 
-- [快速开始](#快速开始)
-- [使用方法](#使用方法)
-- [API 使用](#api-使用)
-- [文件说明](#文件说明)
-- [故障排查](#故障排查)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [API Usage](#api-usage)
+- [File Description](#file-description)
+- [Troubleshooting](#troubleshooting)
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 首次使用
+### First-Time Setup
 
-1. **启动 MCP 服务器**
+1. **Start the MCP Server**
    ```bash
    ./start.sh
    ```
 
-2. **登录小红书账号**
+2. **Login to Xiaohongshu Account**
    ```bash
    ./login.sh
    ```
-   - 会生成 `qrcode.png` 二维码
-   - 用小红书 APP 扫码登录
-   - 登录成功后 cookies 会自动保存
+   - Generates a `qrcode.png` QR code
+   - Scan with Xiaohongshu app to login
+   - Cookies will be automatically saved after successful login
 
-3. **搜索并提取内容**
+3. **Search and Extract Content**
    ```bash
    python3 xiaohongshu_api.py "Tokyo Coffee" 10
    ```
-   - 第一个参数：搜索关键词
-   - 第二个参数：要提取的笔记数量（可选，默认10）
+   - First parameter: search keyword
+   - Second parameter: number of notes to extract (optional, default 10)
 
-### 每次重新打开 VSCode
+### Every Time You Reopen VSCode
 
 ```bash
-# 1. 启动服务器（如果没在运行）
+# 1. Start the server (if not running)
 ./start.sh
 
-# 2. 检查登录（如果 cookies 过期）
+# 2. Check login (if cookies expired)
 ./login.sh
 
-# 3. 开始使用
-python3 xiaohongshu_api.py "你的搜索关键词" 10
+# 3. Start using
+python3 xiaohongshu_api.py "your search keyword" 10
 ```
 
-## 📖 使用方法
+## 📖 Usage
 
-### 基本用法
+### Basic Usage
 
-搜索单个关键词：
+Search for a single keyword:
 ```bash
-python3 xiaohongshu_api.py "东京咖啡" 15
+python3 xiaohongshu_api.py "Tokyo Coffee" 15
 ```
 
-搜索带空格的关键词：
+Search for keywords with spaces:
 ```bash
 python3 xiaohongshu_api.py "Tokyo Travel Guide" 10
 ```
 
-### 输出文件
+### Output Files
 
-搜索结果会自动保存到文件，文件名根据关键词自动生成：
-- 搜索 "Tokyo Coffee" → `tokyo_coffee_notes.txt`
-- 搜索 "东京旅游" → `东京旅游_notes.txt`
+Search results are automatically saved to files, with filenames generated from the keywords:
+- Search "Tokyo Coffee" → `tokyo_coffee_notes.txt`
+- Search "Tokyo Travel" → `tokyo_travel_notes.txt`
 
-### 输出格式
+### Output Format
 
-每条笔记包含：
-- **标题**
-- **正文内容**（包含地址、推荐理由、详细描述等）
+Each note contains:
+- **Title**
+- **Body Content** (includes address, recommendations, detailed descriptions, etc.)
 
-示例：
+Example:
 ```
 ====================================================================================================
-笔记 1
+Note 1
 ====================================================================================================
-标题: 东京·必打卡咖啡馆
+Title: Tokyo Must-Visit Coffee Shops
 
-☕️1. STREAMER COFFEE（图1-4）
-世界拉花冠军泽田洋史开的店，主打一个拉花拿铁☕️
+☕️1. STREAMER COFFEE (Photos 1-4)
+Shop opened by world latte art champion Hiroshi Sawada, specializing in latte art☕️
 ...
-🏠：〒106-0032 Tokyo, Minato City, Roppongi, 6 Chome−11−16
+🏠: 〒106-0032 Tokyo, Minato City, Roppongi, 6 Chome−11−16
 ====================================================================================================
 ```
 
-## 💻 API 使用
+## 💻 API Usage
 
-### 在 Python 代码中使用
+### Using in Python Code
 
 ```python
 from xiaohongshu_api import XiaohongshuAPI
 
-# 创建 API 客户端
+# Create API client
 api = XiaohongshuAPI()
 
-# 检查登录
+# Check login
 if not api.check_login():
-    print("请先登录")
+    print("Please login first")
     exit()
 
-# 搜索笔记（只获取列表）
+# Search for notes (get list only)
 feeds = api.search("Tokyo Coffee", max_results=20)
-print(f"找到 {len(feeds)} 条笔记")
+print(f"Found {len(feeds)} notes")
 
-# 获取单条笔记内容
+# Get single note content
 note = api.get_note_content(feeds[0]['id'], feeds[0]['xsecToken'])
-print(f"标题: {note['title']}")
-print(f"内容: {note['content']}")
+print(f"Title: {note['title']}")
+print(f"Content: {note['content']}")
 
-# 搜索并提取完整内容（推荐）
-results = api.search_and_extract("东京美食", max_notes=10)
+# Search and extract full content (recommended)
+results = api.search_and_extract("Tokyo Food", max_notes=10)
 for note in results:
     print(note['title'])
     print(note['content'])
 ```
 
-### API 方法
+### API Methods
 
-| 方法 | 说明 | 参数 | 返回值 |
-|------|------|------|--------|
-| `check_login()` | 检查登录状态 | 无 | bool |
-| `search(keyword, max_results)` | 搜索笔记列表 | keyword: 关键词<br>max_results: 最大数量 | List[Dict] |
-| `get_note_content(feed_id, xsec_token)` | 获取笔记详情 | feed_id: 笔记ID<br>xsec_token: 令牌 | Dict 或 None |
-| `search_and_extract(keyword, max_notes, delay)` | 搜索并提取内容 | keyword: 关键词<br>max_notes: 数量<br>delay: 请求间隔 | List[Dict] |
+| Method | Description | Parameters | Return Value |
+|--------|-------------|------------|--------------|
+| `check_login()` | Check login status | None | bool |
+| `search(keyword, max_results)` | Search note list | keyword: Search term<br>max_results: Max number | List[Dict] |
+| `get_note_content(feed_id, xsec_token)` | Get note details | feed_id: Note ID<br>xsec_token: Security token | Dict or None |
+| `search_and_extract(keyword, max_notes, delay)` | Search and extract content | keyword: Search term<br>max_notes: Number<br>delay: Request interval | List[Dict] |
 
-## 📁 文件说明
+## 📁 File Description
 
-### 核心文件
-- `xiaohongshu_api.py` - 主要 API（**核心代码**）
-- `start.sh` - 启动 MCP 服务器
-- `login.sh` - 登录检查和二维码生成
-- `stop.sh` - 停止服务器
+### Core Files
+- `xiaohongshu_api.py` - Main API (**core code**)
+- `start.sh` - Start MCP server
+- `login.sh` - Login check and QR code generation
+- `stop.sh` - Stop server
 
-### 配置文件
-- `docker/docker-compose.yml` - Docker 配置
-- `cookies.json` - 登录凭证（自动生成）
+### Configuration Files
+- `docker/docker-compose.yml` - Docker configuration
+- `cookies.json` - Login credentials (auto-generated)
 
-### 输出文件
-- `*_notes.txt` - 提取的笔记内容
-- `qrcode.png` - 登录二维码（临时）
+### Output Files
+- `*_notes.txt` - Extracted note content
+- `qrcode.png` - Login QR code (temporary)
 
-## 🔧 故障排查
+## 🔧 Troubleshooting
 
-### 问题 1: 服务器无法启动
+### Issue 1: Server Won't Start
 
-**症状**: 运行 `./start.sh` 失败
+**Symptoms**: Running `./start.sh` fails
 
-**解决方案**:
-1. 确认 Docker 正在运行
-2. 检查端口 18060 是否被占用：
+**Solutions**:
+1. Confirm Docker is running
+2. Check if port 18060 is occupied:
    ```bash
    lsof -i :18060
    ```
-3. 查看日志：
+3. View logs:
    ```bash
    docker logs xiaohongshu-mcp-server
    ```
 
-### 问题 2: 登录失败或 cookies 过期
+### Issue 2: Login Failed or Cookies Expired
 
-**症状**: 提示"未登录"
+**Symptoms**: Prompted "Not logged in"
 
-**解决方案**:
+**Solutions**:
 ```bash
-# 重新登录
+# Re-login
 ./login.sh
 
-# 扫码后，再次检查
+# After scanning, check again
 ./login.sh
 ```
 
-### 问题 3: 搜索返回空结果
+### Issue 3: Search Returns Empty Results
 
-**可能原因**:
-1. 关键词没有相关笔记
-2. 网络连接问题
-3. 被小红书限流
+**Possible Causes**:
+1. No related notes for the keyword
+2. Network connection issues
+3. Rate limited by Xiaohongshu
 
-**解决方案**:
-- 换个关键词试试
-- 增加请求间隔（修改 `delay` 参数）
-- 等待一段时间后重试
+**Solutions**:
+- Try a different keyword
+- Increase request interval (modify `delay` parameter)
+- Wait a while and try again
 
-### 问题 4: 提取笔记失败
+### Issue 4: Note Extraction Fails
 
-**症状**: 部分笔记显示 "❌ 获取失败"
+**Symptoms**: Some notes show "❌ Retrieval Failed"
 
-**原因**: 
-- API 限流
-- 网络超时
-- 笔记已删除
+**Causes**:
+- API rate limiting
+- Network timeout
+- Note has been deleted
 
-**解决方案**:
-- 正常现象，忽略失败的笔记即可
-- 减少 `max_notes` 数量
-- 增加 `delay` 时间间隔
+**Solutions**:
+- Normal occurrence, ignore failed notes
+- Reduce `max_notes` quantity
+- Increase `delay` time interval
 
-## 📌 使用建议
+## 📌 Usage Recommendations
 
-1. **首次使用**: 建议先搜索 5-10 条笔记测试
-2. **批量抓取**: 建议每次不超过 20 条，避免被限流
-3. **请求间隔**: 默认 1.5 秒，如果频繁失败可增加到 2-3 秒
-4. **Cookies 管理**: 大约每周需要重新登录一次
+1. **First-time use**: Recommend starting with 5-10 notes for testing
+2. **Batch scraping**: Recommend no more than 20 notes per run to avoid rate limiting
+3. **Request intervals**: Default 1.5 seconds, increase to 2-3 seconds if failures are frequent
+4. **Cookie management**: Approximately need to re-login once per week
 
-## 🎯 使用场景
+## 🎯 Use Cases
 
-### 旅行规划
+### Travel Planning
 ```bash
-python3 xiaohongshu_api.py "东京美食推荐" 15
-python3 xiaohongshu_api.py "京都住宿攻略" 10
-python3 xiaohongshu_api.py "大阪购物清单" 10
+python3 xiaohongshu_api.py "Tokyo Food Recommendations" 15
+python3 xiaohongshu_api.py "Kyoto Accommodation Guide" 10
+python3 xiaohongshu_api.py "Osaka Shopping List" 10
 ```
 
-### 咖啡店探索
+### Coffee Shop Exploration
 ```bash
-python3 xiaohongshu_api.py "上海咖啡" 20
-python3 xiaohongshu_api.py "北京精品咖啡" 15
+python3 xiaohongshu_api.py "Shanghai Coffee" 20
+python3 xiaohongshu_api.py "Beijing Specialty Coffee" 15
 ```
 
-### 产品调研
+### Product Research
 ```bash
-python3 xiaohongshu_api.py "iPhone 16 评测" 10
-python3 xiaohongshu_api.py "护肤品推荐" 15
+python3 xiaohongshu_api.py "iPhone 16 Review" 10
+python3 xiaohongshu_api.py "Skincare Recommendations" 15
 ```
 
-## 🔗 相关资源
+## 🔗 Related Resources
 
-- 原始 GitHub 仓库: https://github.com/xpzouying/xiaohongshu-mcp
-- MCP 协议文档: Model Context Protocol
+- Original GitHub repository: https://github.com/xpzouying/xiaohongshu-mcp
+- MCP protocol documentation: Model Context Protocol
 
-## ⚠️ 注意事项
+## ⚠️ Important Notes
 
-1. **仅供学习研究**: 请遵守小红书的用户协议
-2. **请求频率**: 不要过于频繁请求，避免被封号
-3. **数据使用**: 抓取的数据仅供个人使用，请勿商业化
-4. **隐私保护**: 不要抓取和传播用户隐私信息
+1. **For learning and research only**: Please comply with Xiaohongshu's terms of service
+2. **Request frequency**: Don't make requests too frequently to avoid account suspension
+3. **Data usage**: Scraped data is for personal use only, do not commercialize
+4. **Privacy protection**: Do not scrape and distribute user privacy information
 
-## 📝 更新日志
+## 📝 Changelog
 
 ### v1.0.0 (2026-01-20)
-- ✅ 初始版本
-- ✅ 支持任意关键词搜索
-- ✅ 自动提取标题和正文
-- ✅ 简化的启动流程
-- ✅ 完整的错误处理
+- ✅ Initial version
+- ✅ Support searching for any keyword
+- ✅ Auto-extract title and body text
+- ✅ Simplified startup process
+- ✅ Complete error handling
