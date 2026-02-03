@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  xiaohongshu-mcp:
+    image: xpzouying/xiaohongshu-mcp:latest
+    platform: linux/amd64
+    container_name: xiaohongshu-mcp-server
+    ports:
+      - "18060:18060"
+    environment:
+      - TZ=Asia/Shanghai
+      - ROD_BROWSER_BIN=/usr/bin/google-chrome
+    volumes:
+      - ../cookies.json:/app/cookies.json
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge

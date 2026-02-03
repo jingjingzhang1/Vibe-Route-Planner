@@ -1,0 +1,86 @@
+# ===== Large Binary Files =====
+# XiaoHongShu binaries (too large for GitHub)
+xiaohongshu-mcp-darwin-arm64
+xiaohongshu-login-darwin-arm64
+*-darwin-arm64
+*-linux-x86_64
+*.exe
+
+# ===== Sensitive Data =====
+# Authentication and cookies
+cookies.json
+*.cookie
+.env
+.env.local
+*.pem
+*.key
+
+# ===== Output and Generated Files =====
+# Notes and results
+*_notes.txt
+*_results.json
+*.log
+qrcode.png
+docker/qrcode.png
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+venv/
+env/
+ENV/
+
+# ===== OS Files =====
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ===== IDE and Editors =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.ipynb_checkpoints/
+
+# ===== Docker =====
+# Keep docker-compose but ignore other generated files
+!docker/docker-compose.yml
+docker-compose.override.yml
+
+# ===== Temporary Files =====
+*.tmp
+*.bak
+*.cache
